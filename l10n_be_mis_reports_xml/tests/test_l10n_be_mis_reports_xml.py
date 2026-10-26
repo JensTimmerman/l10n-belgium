@@ -81,7 +81,7 @@ class TestXMLReports(TransactionCase):
         instance = self._create_instance()
         wizard = self._create_wizard(instance)
         action = wizard.generate_xml()
-        self.assertEqual(action["type"], "ir.actions.report")
+        self.assertEqual(action["type"], "ir.actions.act_window")
         self.assertEqual(
             action["report_name"],
             "l10n_be_mis_reports_xml.l10n_be_vat_declaration_xml_template",

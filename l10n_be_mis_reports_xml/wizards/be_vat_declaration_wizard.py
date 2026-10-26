@@ -65,7 +65,7 @@ class BeVATDeclarationWizard(models.TransientModel):
         company = self.mr_instance_id.company_id
         if not company.vat:
             raise UserError(
-                _(
+                self.env._(
                     "Please set the %(vat_field)s field on the company "
                     "%(company_name)s (id: %(company_id)s)",
                     vat_field=company._fields["vat"].string,
