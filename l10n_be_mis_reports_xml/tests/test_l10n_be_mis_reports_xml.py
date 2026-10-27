@@ -20,6 +20,10 @@ class TestXMLReports(TransactionCase):
         cls.mr_template = cls.env.ref("l10n_be_mis_reports.mis_report_vat")
         cls.company = cls.env.company
         cls.company.write({"vat": "BE0246697724"})
+        # Odoo 19's report_action() redirects to the document-layout configurator
+        # when the company has no external report layout. Set it so generate_xml()
+        # returns the report action itself.
+        cls.company.external_report_layout_id = cls.env.ref("web.external_layout_standard").id
 
     def _create_instance(self, date_from=None, date_to=None):
         return self.env["mis.report.instance"].create(
@@ -81,7 +85,7 @@ class TestXMLReports(TransactionCase):
         instance = self._create_instance()
         wizard = self._create_wizard(instance)
         action = wizard.generate_xml()
-        self.assertEqual(action["type"], "ir.actions.act_window")
+        self.assertEqual(action["type"], "ir.actions.report")
         self.assertEqual(
             action["report_name"],
             "l10n_be_mis_reports_xml.l10n_be_vat_declaration_xml_template",
