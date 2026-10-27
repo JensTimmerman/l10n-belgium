@@ -23,7 +23,9 @@ class TestXMLReports(TransactionCase):
         # Odoo 19's report_action() redirects to the document-layout configurator
         # when the company has no external report layout. Set it so generate_xml()
         # returns the report action itself.
-        cls.company.external_report_layout_id = cls.env.ref("web.external_layout_standard").id
+        cls.company.external_report_layout_id = cls.env.ref(
+            "web.external_layout_standard"
+        ).id
 
     def _create_instance(self, date_from=None, date_to=None):
         return self.env["mis.report.instance"].create(
